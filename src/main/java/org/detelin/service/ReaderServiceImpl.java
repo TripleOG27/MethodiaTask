@@ -1,14 +1,15 @@
 package org.detelin.service;
 
-import org.detelin.enums.ApplicationEnum;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.util.InputMismatchException;
 
 @Service
 public class ReaderServiceImpl implements ReaderService {
+    private static final String EMPTY_STRING = "";
 
     private static final BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -18,8 +19,8 @@ public class ReaderServiceImpl implements ReaderService {
         try {
             String input = consoleReader.readLine();
             return Integer.parseInt(input);
-        } catch (IOException | NumberFormatException e) {
-            throw new RuntimeException(e);
+        } catch (IOException | NumberFormatException ex) {
+            throw new InputMismatchException(ex.getMessage());
         }
     }
 
@@ -29,7 +30,17 @@ public class ReaderServiceImpl implements ReaderService {
             return consoleReader.readLine();
         } catch (IOException ex) {
             ex.printStackTrace();
+            return EMPTY_STRING;
         }
-        return null;
+    }
+
+    @Override
+    public Workbook readExcelFile(String filePath) {
+        try {
+            File file = new File(filePath);
+            return Workbook.getWorkbook(file);
+        } catch (BiffException | IOException ex) {
+            throw new InputMismatchException(ex.getMessage());
+        }
     }
 }
