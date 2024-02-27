@@ -24,7 +24,8 @@ public class ApplicationServiceImpl implements ApplicationService {
     private static final String SPACE_PATTERN = "\\s+";
     private static final String LIST_TRAVERSE_PROMPT = "Enter elements separated by space!";
     private static final String STRING_DUPLICATES_FIND_PROMPT = "Enter a word or phrase to check for duplicate characters!";
-    private static final String EXCEL_FILE_READ_PROMPT = "Enter a valid absolute path to a excel file with permissions for read!";
+    //the chosen library only supports xls ad not xlsx
+    private static final String EXCEL_FILE_READ_PROMPT = "Enter a valid absolute path to a xls format excel file with permissions for read!";
     private static final String TRY_AGAIN = "Try again!";
 
     private final WriterService writerService;
